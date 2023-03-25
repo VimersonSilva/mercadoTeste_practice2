@@ -153,6 +153,137 @@ class VolatilLoteRepositoryTest {
 	   assertEquals(driver.findAll().size(),1);
 	   assertNull(driver.find(loteExtra.getId()));	   
    }
+   
+   @Test
+   @DisplayName("Procura Lote nao listado/cadastrado")
+   void buscaPorLoteQueNaoEstaListado() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+              
+	   assertEquals(driver.findAll().size(),1);
+	   assertNull(driver.find(loteExtra.getId()));	   
+   }
 
+   @Test
+   @DisplayName("Deleta Lote")
+   void deletaLote() {   
+	   driver.save(lote);
+	   assertEquals(driver.findAll().size(),1);
+	   driver.deleteAll();
+	   assertEquals(driver.findAll().size(),0);
+	   assertNull(driver.find(lote.getId()));	   
+   }
+   
+   @Test
+   @DisplayName("Procura Lote nao listado/cadastrado")
+   void deletaLoteDentreLotes() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.save(loteExtra);       
+	   assertEquals(driver.findAll().size(),2);
+	   driver.delete(loteExtra);
+	   assertEquals(driver.findAll().size(),1);
+	   assertNull(driver.find(loteExtra.getId()));	
+	   assertEquals(lote.getId().longValue(), 
+			   driver.find(lote.getId()).getId().longValue());
+   }
+   
+   @Test
+   @DisplayName("Procura Lote nao listado/cadastrado")
+   void deletaPrimeiroEUltimoLoteCadastrado() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra 2")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       Produto produtoExtraOther = Produto.builder()
+               .id(3L)
+               .nome("Produto Extra 2")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra 2")
+               .preco(125.36)
+               .build();
+       Lote loteExtraOther = Lote.builder()
+               .id(3L)
+               .numeroDeItens(120)
+               .produto(produtoExtraOther)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.save(loteExtra);       
+	   assertEquals(driver.findAll().size(),2);
+	   driver.save(loteExtraOther);       
+	   assertEquals(driver.findAll().size(),3);
+	   driver.delete(lote);
+	   assertEquals(driver.findAll().size(),2);
+	   driver.delete(loteExtraOther);
+	   assertEquals(driver.findAll().size(),1);
+	   assertNull(driver.find(lote.getId()));
+	   assertNull(driver.find(loteExtraOther.getId()));
+	   assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+   }
+   
+   @Test
+   @DisplayName("Deleta os lotes ate lista ficar vazia")
+   void deletaAteListaVazia() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.save(loteExtra);       
+	   assertEquals(driver.findAll().size(),2);
+	   driver.delete(loteExtra);
+	   assertEquals(driver.findAll().size(),1);
+	   driver.delete(lote);
+	   assertEquals(driver.findAll().size(),0);
+	   assertNull(driver.find(loteExtra.getId()));	
+	   assertNull(driver.find(lote.getId()));	
+   }
 
 }
