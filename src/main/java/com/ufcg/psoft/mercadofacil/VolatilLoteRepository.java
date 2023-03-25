@@ -13,12 +13,21 @@ public class VolatilLoteRepository implements LoteRepository<Lote, Long> {
    @Override
    public Lote save(Lote lote) {
 	   lotes.add(lote);
-	   return lotes.stream().findFirst().get();
+	   return lotes.get(lotes.size() - 1);
+	   //return lotes.stream().findFirst().get();
    }
 
    @Override
-   public Lote find(Long id) {
-	   return lotes.get(Integer.parseInt("" + id));
+   public Lote find(Long id) {	   
+	   Lote loteEncontrado = null;
+	   for(int i = 0; i < lotes.size(); i++) {
+		   if(lotes.get(i).getId().equals(id)) {
+			   loteEncontrado = lotes.get(i);
+		   }
+	   }
+	   return loteEncontrado;
+	   
+	   //return lotes.get(Integer.parseInt("" + id));
    }
 
    @Override

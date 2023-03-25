@@ -61,8 +61,7 @@ class VolatilLoteRepositoryTest {
        assertEquals(resultado.getId().longValue(), lote.getId().longValue());
        assertEquals(resultado.getProduto(), produto);
    }
-
-
+   
    @Test
    @DisplayName("Adicionar o segundo Lote (ou posterior) no repositorio de dados")
    void salvarSegundoLoteOuPosterior() {
@@ -89,6 +88,14 @@ class VolatilLoteRepositoryTest {
        assertEquals(resultado.getProduto(), produtoExtra);
 
 
+   }
+   
+   @Test
+   @DisplayName("Procura Lote")
+   void salvarSegundoLoteOuPosterior2() {
+	   driver.save(lote);
+	   assertEquals(driver.findAll().size(),1);
+	   assertEquals(lote.getId().longValue(), driver.find(lote.getId()).getId().longValue());	   
    }
 
 
