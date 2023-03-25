@@ -50,9 +50,9 @@ public class VolatilLoteRepository implements LoteRepository<Lote, Long> {
 
    @Override
    public void delete(Lote lote) {
-	   for(Lote loteIteravel : lotes) {
-		   if(lote.getId().equals(loteIteravel.getId())) {
-			   loteIteravel = null;
+	   for(int i = 0; i < lotes.size(); i++) {
+		   if(lotes.get(i).getId().equals(lote.getId())) {
+			   lotes.remove(i);
 		   }
 	   }
    }

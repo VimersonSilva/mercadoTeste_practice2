@@ -100,7 +100,7 @@ class VolatilLoteRepositoryTest {
    
    @Test
    @DisplayName("Procura Lote dentre vários Lotes")
-   void buscaPorLote1() {	   
+   void buscaPorLoteDentreLotes() {	   
 	   Produto produtoExtra = Produto.builder()
                .id(2L)
                .nome("Produto Extra")
@@ -128,6 +128,30 @@ class VolatilLoteRepositoryTest {
 	   driver.deleteAll();
 	   assertEquals(driver.findAll().size(),0);
 	   assertNull(driver.find(lote.getId()));	   
+   }
+   
+   @Test
+   @DisplayName("Procura Lote deletado")
+   void buscaPorLoteDeletado() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       driver.save(loteExtra);
+       driver.delete(loteExtra);
+       
+	   assertEquals(driver.findAll().size(),1);
+	   assertNull(driver.find(loteExtra.getId()));	   
    }
 
 
