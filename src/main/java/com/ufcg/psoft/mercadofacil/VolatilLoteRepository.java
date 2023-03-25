@@ -36,14 +36,25 @@ public class VolatilLoteRepository implements LoteRepository<Lote, Long> {
    }
    @Override
    public Lote update(Lote lote) {
-	   lotes.clear();
-	   lotes.add(lote);
-	   return lotes.stream().findFirst().orElse(null);
+	   for(Lote loteIteravel : lotes) {
+		   if(lote.getId().equals(loteIteravel.getId())) {
+			   loteIteravel = lote;
+			   return loteIteravel;
+		   }
+	   }
+	   return null;
+//	   lotes.clear();
+//	   lotes.add(lote);
+//	   return lotes.stream().findFirst().orElse(null);
    }
 
    @Override
    public void delete(Lote lote) {
-	   lotes.clear();
+	   for(Lote loteIteravel : lotes) {
+		   if(lote.getId().equals(loteIteravel.getId())) {
+			   loteIteravel = null;
+		   }
+	   }
    }
 
    @Override
