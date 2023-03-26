@@ -34,18 +34,18 @@ public class VolatilLoteRepository implements LoteRepository<Lote, Long> {
    public List<Lote> findAll() {
 	   return lotes;
    }
+   
    @Override
    public Lote update(Lote lote) {
-	   for(Lote loteIteravel : lotes) {
-		   if(lote.getId().equals(loteIteravel.getId())) {
-			   loteIteravel = lote;
-			   return loteIteravel;
+	   Lote loteUpdate = null;
+	   for(int i = 0; i < lotes.size(); i++) {
+		   if(lotes.get(i).getId().equals(lote.getId())) {
+			   lotes.set(i, lote);
+			   loteUpdate = lote;
 		   }
 	   }
-	   return null;
-//	   lotes.clear();
-//	   lotes.add(lote);
-//	   return lotes.stream().findFirst().orElse(null);
+	   return loteUpdate;
+
    }
 
    @Override

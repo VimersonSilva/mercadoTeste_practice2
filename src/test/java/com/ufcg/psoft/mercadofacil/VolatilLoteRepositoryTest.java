@@ -3,6 +3,7 @@ package com.ufcg.psoft.mercadofacil;
 //import com.ufcg.psoft.mercadofacil.model.Lote;
 //import com.ufcg.psoft.mercadofacil.model.Produto;
 import org.junit.jupiter.api.AfterEach;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -284,6 +285,198 @@ class VolatilLoteRepositoryTest {
 	   assertEquals(driver.findAll().size(),0);
 	   assertNull(driver.find(loteExtra.getId()));	
 	   assertNull(driver.find(lote.getId()));	
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote vazio")
+   void updateLotesVazio() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+	   assertNull(driver.update(loteExtra));	
+	   
+   }
+   
+   @Test
+   @DisplayName("Tenta atualizar lote com id diferente em uma lista com lotes presentes")
+   void updateLotesIdDifferent() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Extra")
+               .codigoBarra("987654321")
+               .fabricante("Fabricante Extra")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);
+	   assertNull(driver.update(loteExtra));	
+	   
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote com id produto diferente")
+   void updateLote() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(2L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(1L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);       
+       assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+       assertNotEquals(lote.getProduto().getId().longValue(), driver.find(loteExtra.getId()).getProduto().getId().longValue());	   
+	   
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote com nome do produto diferente")
+   void updateLoteDifferentNameProduct() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base 1")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(1L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);       
+       assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+       assertNotEquals(lote.getProduto().getNome(), driver.find(loteExtra.getId()).getProduto().getId());	   
+	   
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote com codigo de barra do produto diferente")
+   void updateLoteCodigoBarraProduto() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456788")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(1L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);       
+       assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+       assertNotEquals(lote.getProduto().getCodigoBarra(), driver.find(loteExtra.getId()).getProduto().getCodigoBarra());	   
+	   
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote com fabricante do produto diferente")
+   void updateLoteFabricanteProduto() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base 2")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(1L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);       
+       assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+       assertNotEquals(lote.getProduto().getFabricante(), driver.find(loteExtra.getId()).getProduto().getFabricante());	   
+	   
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote com preco do produto diferente")
+   void updateLotePrecoProduto() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(130)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(1L)
+               .numeroDeItens(100)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);       
+       assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+       assertNotEquals(lote.getProduto().getPreco(), driver.find(loteExtra.getId()).getProduto().getPreco());	   
+	   
+   }
+   
+   @Test
+   @DisplayName("atualiza um lote com números de itens do lote diferentes")
+   void updateLoteNumerosItensLote() {	   
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(1L)
+               .numeroDeItens(150)
+               .produto(produtoExtra)
+               .build();
+       
+       driver.save(lote);
+       assertEquals(driver.findAll().size(),1);
+       driver.update(loteExtra);       
+       assertEquals(loteExtra.getId().longValue(), 
+			   driver.find(loteExtra.getId()).getId().longValue());
+       assertNotEquals(lote.getNumeroDeItens(), driver.find(loteExtra.getId()).getNumeroDeItens());	   
+	   
    }
 
 }
