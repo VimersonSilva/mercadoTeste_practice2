@@ -478,5 +478,83 @@ class VolatilLoteRepositoryTest {
        assertNotEquals(lote.getNumeroDeItens(), driver.find(loteExtra.getId()).getNumeroDeItens());	   
 	   
    }
-
+   
+   @Test
+   @DisplayName("Testa funcao FindAll")
+   void findAllTest() {
+	   driver.save(lote);
+	   assertEquals(driver.findAll().size(),1);
+	   assertEquals(driver.findAll().get(0), lote);   
+   }
+   
+   @Test
+   @DisplayName("Testa funcao FindAll para dois lotes")
+   void findAllDoisLotesTest() {
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(150)
+               .produto(produtoExtra)
+               .build();
+	   driver.save(lote);
+	   driver.save(loteExtra);
+	   assertEquals(driver.findAll().size(),2);
+	   assertEquals(driver.findAll().get(0), lote);
+	   assertEquals(driver.findAll().get(1), loteExtra);
+   }
+   
+   @Test
+   @DisplayName("Testa funcao FindAll para dois lotes cadastrados mas com"
+   		+ " aplicacao do delete")
+   void findAllDoisLotesComDeleteTest() {
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(150)
+               .produto(produtoExtra)
+               .build();
+       
+	   driver.save(lote);
+	   assertEquals(driver.findAll().size(), 1);
+	   assertEquals(driver.findAll().get(0), lote);
+	   driver.save(loteExtra);	   
+	   assertEquals(driver.findAll().size(), 2);
+	   assertEquals(driver.findAll().get(1), loteExtra);
+	   driver.delete(loteExtra);
+	   assertFalse(driver.findAll().contains(loteExtra));
+   }
+   
+   @Test
+   @DisplayName("Testa funcao FindAll para dois lotes")
+   void DeleteAllDoisLotesTest() {
+	   Produto produtoExtra = Produto.builder()
+               .id(1L)
+               .nome("Produto Base")
+               .codigoBarra("123456789")
+               .fabricante("Fabricante Base")
+               .preco(125.36)
+               .build();
+       Lote loteExtra = Lote.builder()
+               .id(2L)
+               .numeroDeItens(150)
+               .produto(produtoExtra)
+               .build();
+	   driver.save(lote);
+	   driver.save(loteExtra);
+	   assertEquals(driver.findAll().size(),2);
+	   driver.deleteAll();
+	   assertEquals(driver.findAll().size(),0);
+   }
 }
