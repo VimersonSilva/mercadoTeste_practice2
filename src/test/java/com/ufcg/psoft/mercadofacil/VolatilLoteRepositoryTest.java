@@ -1,7 +1,6 @@
 package com.ufcg.psoft.mercadofacil;
 
-//import com.ufcg.psoft.mercadofacil.model.Lote;
-//import com.ufcg.psoft.mercadofacil.model.Produto;
+
 import org.junit.jupiter.api.AfterEach;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ufcg.psoft.mercadofacil.model.Lote;
+import com.ufcg.psoft.mercadofacil.model.Produto;
+import com.ufcg.psoft.mercadofacil.repository.VolatilLoteRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
