@@ -10,6 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+<<<<<<< Updated upstream
+=======
+import com.ufcg.psoft.mercadofacil.model.Lote;
+import com.ufcg.psoft.mercadofacil.model.Produto;
+import com.ufcg.psoft.mercadofacil.repository.LoteVolatilRepository;
+>>>>>>> Stashed changes
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +25,7 @@ class VolatilLoteRepositoryTest {
 
 
    @Autowired
-   VolatilLoteRepository driver;
+   LoteVolatilRepository driver;
 
 
    Lote lote;
@@ -41,7 +47,7 @@ class VolatilLoteRepositoryTest {
                .numeroDeItens(100)
                .produto(produto)
                .build();
-       driver = new VolatilLoteRepository();
+       driver = new LoteVolatilRepository();
    }
 
 
