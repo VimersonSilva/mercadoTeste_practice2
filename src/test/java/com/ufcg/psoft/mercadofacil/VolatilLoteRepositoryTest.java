@@ -4,18 +4,19 @@ package com.ufcg.psoft.mercadofacil;
 //import com.ufcg.psoft.mercadofacil.model.Produto;
 import org.junit.jupiter.api.AfterEach;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
 import com.ufcg.psoft.mercadofacil.model.Lote;
 import com.ufcg.psoft.mercadofacil.model.Produto;
 import com.ufcg.psoft.mercadofacil.repository.LoteVolatilRepository;
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 
 import static org.junit.jupiter.api.Assertions.*;
 
