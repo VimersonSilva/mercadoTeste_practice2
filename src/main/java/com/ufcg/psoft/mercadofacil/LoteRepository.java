@@ -1,4 +1,4 @@
-package com.ufcg.psoft.mercadofacil.repository;
+package com.ufcg.psoft.mercadofacil;
 
 import java.util.List;
 
